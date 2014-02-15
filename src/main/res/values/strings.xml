@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2014, Philip Cronje
+     All rights reserved.
+
+     Distributed under the terms of the BSD 2-Clause License. See LICENSE in the source distribution
+     for the full terms of the license. -->
+<resources>
+	<string name="application_label">Muzei: androidwallpape.rs</string>
+
+	<string name="muzei_label">androidwallpape.rs</string>
+	<string name="muzei_description">A curated wallpaper gallery</string>
+</resources>

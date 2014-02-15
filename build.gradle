@@ -30,6 +30,7 @@ repositories {
 
 dependencies {
 	compile 'com.google.android.apps.muzei:muzei-api:1.+'
+	compile 'org.jsoup:jsoup:1.7.+'
 }
 
 /* ********************************************************************************************** */
@@ -39,9 +40,31 @@ android {
 
 	defaultConfig {
 		versionCode 1
-		versionName '0'
-		minSdkVersion 3
+		versionName '1.0'
+		minSdkVersion 17
 		targetSdkVersion 19
+	}
+
+	signingConfigs {
+		release {
+			def properties = new Properties()
+			properties.load(new FileInputStream("local.properties"))
+
+			storeFile file(properties['releasekey.file'])
+			keyAlias properties['releasekey.alias']
+			storePassword properties['releasekey.storepw']
+			keyPassword properties['releasekey.keypw']
+		}
+	}
+
+	buildTypes {
+		release {
+			debuggable false
+			runProguard true
+			proguardFiles getDefaultProguardFile('proguard-android.txt'),
+					file('proguard-project.txt')
+			signingConfig signingConfigs.release
+		}
 	}
 }
 

@@ -4,4 +4,25 @@
 
      Distributed under the terms of the BSD 2-Clause License. See LICENSE in the source distribution
      for the full terms of the license. -->
-<manifest package="net.za.slyfox.muzei.awprs" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="net.za.slyfox.muzei.awprs">
+
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+	<application android:label="@string/application_label"
+			android:icon="@drawable/ic_launcher"
+			android:allowBackup="false">
+		<service android:name=".AndroidWallpapersArtSource"
+			android:icon="@drawable/ic_source"
+			android:label="@string/muzei_label"
+			android:description="@string/muzei_description">
+
+			<intent-filter>
+				<action android:name="com.google.android.apps.muzei.api.MuzeiArtSource" />
+			</intent-filter>
+			<meta-data android:name="color" android:value="#FFF" />
+		</service>
+	</application>
+</manifest>
