@@ -1,0 +1,48 @@
+/* ********************************************************************************************** */
+/*
+ * Copyright (C) 2014, Philip Cronje
+ * All rights reserved.
+ *
+ * Distributed under the terms of the BSD 2-Clause License. See LICENSE in the source distribution
+ * for the full terms of the license.
+ */
+/* ********************************************************************************************** */
+description = 'A Muzei wallpaper source for androidwallpape.rs'
+
+/* ********************************************************************************************** */
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath 'com.android.tools.build:gradle:0.8.+'
+	}
+}
+
+/* ********************************************************************************************** */
+apply plugin: 'android'
+
+/* ********************************************************************************************** */
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'com.google.android.apps.muzei:muzei-api:1.+'
+}
+
+/* ********************************************************************************************** */
+android {
+	buildToolsVersion '19.0.1'
+	compileSdkVersion 19
+
+	defaultConfig {
+		versionCode 1
+		versionName '0'
+		minSdkVersion 3
+		targetSdkVersion 19
+	}
+}
+
+/* ********************************************************************************************** */
