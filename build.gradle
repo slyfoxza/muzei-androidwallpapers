@@ -48,7 +48,7 @@ android {
 	signingConfigs {
 		release {
 			def properties = new Properties()
-			properties.load(new FileInputStream("local.properties"))
+			properties.load(new FileInputStream(file("local.properties")))
 
 			storeFile file(properties['releasekey.file'])
 			keyAlias properties['releasekey.alias']
