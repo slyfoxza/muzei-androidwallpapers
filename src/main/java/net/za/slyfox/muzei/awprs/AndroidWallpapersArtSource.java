@@ -62,7 +62,9 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 			Element elmTitleHeading = wallpaper.select("h2 a").first();
 			Element elmAuthor = wallpaper.select(".author a").first();
 
-			String fullURIString = elmTitleHeading.attr("href").replace(" ", "%20");
+			String fullURIString = elmTitleHeading.attr("href");
+			fullURIString = Uri.encode(fullURIString, ":/");
+
 			Uri fullURI = Uri.parse(fullURIString);
 			Uri viewURI = fullURI;
 			String viewURIString = elmAuthor.attr("href");
