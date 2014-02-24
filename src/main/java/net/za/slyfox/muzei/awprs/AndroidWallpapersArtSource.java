@@ -10,11 +10,14 @@
 package net.za.slyfox.muzei.awprs;
 
 /* ********************************************************************************************** */
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 
 import com.google.android.apps.muzei.api.Artwork;
+import com.google.android.apps.muzei.api.MuzeiArtSource;
 import com.google.android.apps.muzei.api.RemoteMuzeiArtSource;
 
 import org.jsoup.Connection;
@@ -32,11 +35,12 @@ import java.util.Random;
 /* ********************************************************************************************** */
 public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 {
-	private static final String TAG = "AndroidWallpapersArtSource";
+	public static final String PREFKEY_ROTATE_INTERVAL_MINUTES = "rotateIntervalMinutes";
+	public static final int DEFAULT_ROTATE_INTERVAL_MINUTES = 24 * 60; // 24 hours
 
 	public AndroidWallpapersArtSource()
 	{
-		super("AndroidWallpapersArtSource");
+		super(SOURCE_NAME);
 
 	} // AndroidWallpapersArtSource()
 
@@ -46,6 +50,12 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 		setUserCommands(BUILTIN_COMMAND_ID_NEXT_ARTWORK);
 
 	} // onCreate
+
+	public static SharedPreferences getSharedPreferences(Context context)
+	{
+		return MuzeiArtSource.getSharedPreferences(context, SOURCE_NAME);
+
+	} // getSharedPreferences
 
 	@Override protected void onTryUpdate(int reason) throws RetryException
 	{
@@ -151,9 +161,14 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 
 	private void reschedule()
 	{
-		scheduleUpdate(System.currentTimeMillis() + 24L * 60L * 60L * 1000L);
+		long rotateIntervalMinutes = (long)getSharedPreferences().getInt(
+				PREFKEY_ROTATE_INTERVAL_MINUTES, DEFAULT_ROTATE_INTERVAL_MINUTES);
+		scheduleUpdate(System.currentTimeMillis() + rotateIntervalMinutes * 60L * 1000L);
 
 	} // reschedule
+
+	private static final String SOURCE_NAME = "AndroidWallpapersArtSource";
+	private static final String TAG = SOURCE_NAME;
 
 } // AndroidWallpapersArtSource
 

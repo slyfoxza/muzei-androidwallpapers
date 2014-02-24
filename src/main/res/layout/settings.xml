@@ -10,7 +10,8 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<RadioGroup android:orientation="vertical"
+	<RadioGroup android:id="@+id/radio_group"
+		android:orientation="vertical"
 		android:gravity="center"
 		android:layout_gravity="center"
 		android:layout_width="match_parent"
@@ -25,22 +26,29 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" />
 
-		<RadioButton android:text="@string/rotate_interval_none"
+		<RadioButton android:id="@+id/rotate_interval_none"
+			android:text="@string/rotate_interval_none"
 			style="?android:radioButtonStyle"
 			tools:textColor="#888" />
-		<RadioButton android:text="@string/rotate_interval_1h"
+		<RadioButton android:id="@+id/rotate_interval_1h"
+			android:text="@string/rotate_interval_1h"
 			style="?android:radioButtonStyle"
+			tools:checked="true"
 			tools:textColor="#FFF" />
-		<RadioButton android:text="@string/rotate_interval_3h"
+		<RadioButton android:id="@+id/rotate_interval_3h"
+			android:text="@string/rotate_interval_3h"
 			style="?android:radioButtonStyle"
 			tools:textColor="#888" />
-		<RadioButton android:text="@string/rotate_interval_6h"
+		<RadioButton android:id="@+id/rotate_interval_6h"
+			android:text="@string/rotate_interval_6h"
 			style="?android:radioButtonStyle"
 			tools:textColor="#888" />
-		<RadioButton android:text="@string/rotate_interval_24h"
+		<RadioButton android:id="@+id/rotate_interval_24h"
+			android:text="@string/rotate_interval_24h"
 			style="?android:radioButtonStyle"
 			tools:textColor="#888" />
-		<RadioButton android:text="@string/rotate_interval_3d"
+		<RadioButton android:id="@+id/rotate_interval_3d"
+			android:text="@string/rotate_interval_3d"
 			style="?android:radioButtonStyle"
 			tools:textColor="#888" />
 	</RadioGroup>
