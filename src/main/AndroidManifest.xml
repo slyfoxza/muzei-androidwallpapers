@@ -14,6 +14,11 @@
 	<application android:label="@string/application_label"
 			android:icon="@drawable/ic_launcher"
 			android:allowBackup="false">
+		<activity android:name=".AndroidWallpapersSettingsActivity"
+			android:label="@string/settings_label"
+			android:theme="@style/Theme.Settings"
+			android:exported="true" />
+
 		<service android:name=".AndroidWallpapersArtSource"
 			android:icon="@drawable/ic_source"
 			android:label="@string/muzei_label"
@@ -23,6 +28,8 @@
 				<action android:name="com.google.android.apps.muzei.api.MuzeiArtSource" />
 			</intent-filter>
 			<meta-data android:name="color" android:value="#FFF" />
+			<meta-data android:name="settingsActivity"
+				android:value=".AndroidWallpapersSettingsActivity" />
 		</service>
 	</application>
 </manifest>

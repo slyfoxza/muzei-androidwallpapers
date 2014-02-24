@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2014, Philip Cronje
+     All rights reserved.
+
+     Distributed under the terms of the BSD 2-Clause License. See LICENSE in the source distribution
+     for the full terms of the license. -->
+<resources>
+	<style name="ActionBar.Settings" parent="android:Widget.Holo.ActionBar">
+		<item name="android:background">@null</item>
+		<item name="android:titleTextStyle">?android:textAppearanceMedium</item>
+	</style>
+
+	<style name="RadioButton.Settings" parent="android:Widget.Holo.CompoundButton.RadioButton">
+		<item name="android:button">@null</item>
+		<item name="android:minHeight">48dp</item>
+		<item name="android:textAppearance">@style/TextAppearance.Settings</item>
+		<item name="android:textColor">@color/settings_radio_button</item>
+
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+
+	<style name="TextAppearance.Medium" parent="android:TextAppearance.Holo.Medium">
+		<item name="android:fontFamily">sans-serif-condensed</item>
+		<item name="android:textColor">#FFF</item>
+	</style>
+	<style name="TextAppearance.Settings" parent="TextAppearance.Medium">
+		<item name="android:textSize">18sp</item>
+	</style>
+</resources>

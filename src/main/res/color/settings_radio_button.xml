@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2014, Philip Cronje
+     All rights reserved.
+
+     Distributed under the terms of the BSD 2-Clause License. See LICENSE in the source distribution
+     for the full terms of the license. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:color="#FFF" android:state_checked="true" />
+	<item android:color="#888" />
+</selector>

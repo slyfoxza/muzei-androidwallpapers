@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2014, Philip Cronje
+     All rights reserved.
+
+     Distributed under the terms of the BSD 2-Clause License. See LICENSE in the source distribution
+     for the full terms of the license. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:background="#8000"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<RadioGroup android:orientation="vertical"
+		android:gravity="center"
+		android:layout_gravity="center"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView android:text="@string/rotate_interval_heading"
+			android:textAppearance="@style/TextAppearance.Settings"
+			android:textStyle="bold"
+			android:background="@drawable/bg_settings_heading"
+			android:paddingBottom="8dp"
+			android:layout_marginBottom="8dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+
+		<RadioButton android:text="@string/rotate_interval_none"
+			style="?android:radioButtonStyle"
+			tools:textColor="#888" />
+		<RadioButton android:text="@string/rotate_interval_1h"
+			style="?android:radioButtonStyle"
+			tools:textColor="#FFF" />
+		<RadioButton android:text="@string/rotate_interval_3h"
+			style="?android:radioButtonStyle"
+			tools:textColor="#888" />
+		<RadioButton android:text="@string/rotate_interval_6h"
+			style="?android:radioButtonStyle"
+			tools:textColor="#888" />
+		<RadioButton android:text="@string/rotate_interval_24h"
+			style="?android:radioButtonStyle"
+			tools:textColor="#888" />
+		<RadioButton android:text="@string/rotate_interval_3d"
+			style="?android:radioButtonStyle"
+			tools:textColor="#888" />
+	</RadioGroup>
+</ScrollView>

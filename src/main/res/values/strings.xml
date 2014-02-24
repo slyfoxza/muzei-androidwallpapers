@@ -7,6 +7,15 @@
 <resources>
 	<string name="application_label">Muzei: androidwallpape.rs</string>
 
+	<string name="settings_label">Settings</string>
+	<string name="rotate_interval_heading">Update interval</string>
+	<string name="rotate_interval_none">Don\'t change wallpaper</string>
+	<string name="rotate_interval_1h">Every hour</string>
+	<string name="rotate_interval_3h">Every 3 hours</string>
+	<string name="rotate_interval_6h">Every 6 hours</string>
+	<string name="rotate_interval_24h">Every 24 hours</string>
+	<string name="rotate_interval_3d">Every 3 days</string>
+
 	<string name="muzei_label">androidwallpape.rs</string>
 	<string name="muzei_description">A curated wallpaper gallery</string>
 </resources>
