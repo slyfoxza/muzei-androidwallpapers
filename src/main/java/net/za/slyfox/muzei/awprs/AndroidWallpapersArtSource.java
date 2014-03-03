@@ -56,22 +56,47 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 			Connection.Response response = connection.execute();
 			Document document = response.parse();
 			Elements wallpapers = document.select("#wallpapers ul li[data-id]");
+
+			int wallpaperCount = wallpapers.size();
+			if(wallpaperCount <= 0)
+			{
+				Log.w(TAG, "No wallpapers found, requesting retry");
+				throw new RetryException();
+			}
 			Random random = new Random();
-			Element wallpaper = wallpapers.get(random.nextInt(wallpapers.size()));
+			Element wallpaper = wallpapers.get(random.nextInt(wallpaperCount));
 
 			Element elmTitleHeading = wallpaper.select("h2 a").first();
+			if(elmTitleHeading == null)
+			{
+				Log.w(TAG, "Selected wallpaper without title, requesting retry");
+				throw new RetryException();
+			}
+
 			Element elmAuthor = wallpaper.select(".author a").first();
 
 			String fullURIString = elmTitleHeading.attr("href");
+			if(StringUtil.isBlank(fullURIString))
+			{
+				Log.w(TAG, "Selected wallpaper with blank href, requesting retry");
+				throw new RetryException();
+			}
 			fullURIString = Uri.encode(fullURIString, ":/");
-
 			Uri fullURI = Uri.parse(fullURIString);
 			Uri viewURI = fullURI;
-			String viewURIString = elmAuthor.attr("href");
-			String byline = elmAuthor.text();
-			if(!StringUtil.isBlank(viewURIString))
+
+			String byline = null;
+			if(elmAuthor != null)
 			{
-				viewURI = Uri.parse(viewURIString);
+				byline = elmAuthor.text();
+				if(!StringUtil.isBlank(byline))
+				{
+					String viewURIString = elmAuthor.attr("href");
+					if(!StringUtil.isBlank(viewURIString))
+					{
+						viewURI = Uri.parse(viewURIString);
+					}
+				}
 			}
 
 			if(BuildConfig.DEBUG)
@@ -81,13 +106,17 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 						+ wallpaper.attr("data-id") + ", viewURI=" + viewURI.toString());
 			}
 
-			publishArtwork(new Artwork.Builder()
+			Artwork.Builder builder = new Artwork.Builder()
 					.title(elmTitleHeading.text())
-					.byline(byline)
 					.imageUri(fullURI)
 					.token(wallpaper.attr("data-id"))
-					.viewIntent(new Intent(Intent.ACTION_VIEW, viewURI))
-					.build());
+					.viewIntent(new Intent(Intent.ACTION_VIEW, viewURI));
+			if(byline != null)
+			{
+				builder.byline(byline);
+			}
+
+			publishArtwork(builder.build());
 		}
 		catch(HttpStatusException e)
 		{
