@@ -63,27 +63,7 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 			wallpapers = document.select("#wallpapers ul li[data-id]");
 			Element wallpaper = selectWallpaper();
 
-			String idString = wallpaper.attr("data-id");
-			int id;
-			try
-			{
-				id = Integer.valueOf(idString);
-			}
-			catch(NumberFormatException e)
-			{
-				Log.w(TAG, "Wallpaper ID '" + idString + "' is not an integral value, requesting "
-						+ "retry");
-				throw new RetryException(e);
-			}
-
-			int blacklistIndex = Arrays.binarySearch(
-					getResources().getIntArray(R.array.blacklist_ids), id);
-			if(blacklistIndex >= 0)
-			{
-				Log.i(TAG, "Selected wallpaper (ID " + idString + ") is blacklisted; requesting"
-						+ "retry");
-				throw new RetryException();
-			}
+			String id = wallpaper.attr("data-id");
 
 			Element elmTitleHeading = wallpaper.select("h2 a").first();
 			if(elmTitleHeading == null)
@@ -121,14 +101,14 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 			if(BuildConfig.DEBUG)
 			{
 				Log.d(TAG, "Publishing artwork: title=" + elmTitleHeading.text() + ", byline="
-						+ byline + ", imageUri=" + fullURI.toString() + ", token=" + idString
+						+ byline + ", imageUri=" + fullURI.toString() + ", token=" + id
 						+ ", viewURI=" + viewURI.toString());
 			}
 
 			Artwork.Builder builder = new Artwork.Builder()
 					.title(elmTitleHeading.text())
 					.imageUri(fullURI)
-					.token(idString)
+					.token(id)
 					.viewIntent(new Intent(Intent.ACTION_VIEW, viewURI));
 			if(byline != null)
 			{
