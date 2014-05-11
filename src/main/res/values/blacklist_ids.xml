@@ -6,6 +6,7 @@
      for the full terms of the license. -->
 <resources>
 	<integer-array name="blacklist_ids">
+		<item>14</item>
 		<item>21</item>
 		<item>22</item>
 	</integer-array>
