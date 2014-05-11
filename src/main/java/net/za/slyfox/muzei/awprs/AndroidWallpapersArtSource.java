@@ -35,9 +35,13 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 {
 	private static final String TAG = "AndroidWallpapersArtSource";
 
+	private Random random;
+	private Elements wallpapers;
+
 	public AndroidWallpapersArtSource()
 	{
 		super("AndroidWallpapersArtSource");
+		random = new Random();
 
 	} // AndroidWallpapersArtSource()
 
@@ -56,16 +60,8 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 		{
 			Connection.Response response = connection.execute();
 			Document document = response.parse();
-			Elements wallpapers = document.select("#wallpapers ul li[data-id]");
-
-			int wallpaperCount = wallpapers.size();
-			if(wallpaperCount <= 0)
-			{
-				Log.w(TAG, "No wallpapers found, requesting retry");
-				throw new RetryException();
-			}
-			Random random = new Random();
-			Element wallpaper = wallpapers.get(random.nextInt(wallpaperCount));
+			wallpapers = document.select("#wallpapers ul li[data-id]");
+			Element wallpaper = selectWallpaper();
 
 			String idString = wallpaper.attr("data-id");
 			int id;
@@ -171,6 +167,54 @@ public class AndroidWallpapersArtSource extends RemoteMuzeiArtSource
 		reschedule();
 
 	} // onTryUpdate
+
+	private Element selectWallpaper() throws RetryException
+	{
+		int wallpaperCount = wallpapers.size();
+		if(wallpaperCount <= 0)
+		{
+			Log.w(TAG, "No wallpapers found, requesting retry");
+			throw new RetryException();
+		}
+
+		for(int attempt = 0; attempt < 10; ++attempt)
+		{
+			Element wallpaper = wallpapers.get(random.nextInt(wallpaperCount));
+
+			String idString = wallpaper.attr("data-id");
+			int id;
+			try
+			{
+				id = Integer.valueOf(idString);
+			}
+			catch(NumberFormatException e)
+			{
+				/*
+				 * Not a fatal error, just means it's incompatible with the integer ID assumption of
+				 * the wallpaper blacklist, so assume that the wallpaper is good to go.
+				 */
+				return wallpaper;
+			}
+
+			int blacklistIndex = Arrays.binarySearch(
+					getResources().getIntArray(R.array.blacklist_ids), id);
+			if(blacklistIndex >= 0)
+			{
+				if(BuildConfig.DEBUG)
+				{
+					Log.d(TAG, "Selected blacklisted wallpaper " + idString + ", selecting another");
+				}
+
+				continue;
+			}
+
+			return wallpaper;
+		}
+
+		Log.w(TAG, "Exhausted attempts to select non-blacklisted wallpaper, requesting retry");
+		throw new RetryException();
+
+	} // selectWallpaper
 
 	private void reschedule()
 	{
